@@ -19,8 +19,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Person implements Serializable {
 	 
 	 String name,place,email;
-
-	 
 	 
 	public Person() {
 		super();
@@ -60,31 +58,10 @@ public class Person implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	 
-	/* public byte[] toByteArray(){
-		 byte[] ba = new byte[2];
-		    return ba;
-	 }
-	 
-	
-	 */
+
 	
 	   public  byte[] toByteArray(Person person) throws IOException  {
-
-	/*        try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
-	            try(ObjectOutputStream o = new ObjectOutputStream(b)){
-	                try {
-						o.writeObject(person);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	            }
-
-	 		   System.out.println(b.toByteArray());
-	            return b.toByteArray();
-	        }
-	        */
+	       
 	        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	        ObjectOutputStream out = null;
 	        try {
