@@ -1,7 +1,6 @@
 # netty-server
 Build a Java Netty server that accepts a message and saves it into a Kafka queue. 
 
-
 Short Description:
 The project accepts the message from the client and decodes the message  and save's to the kafka ..
 
