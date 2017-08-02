@@ -20,32 +20,14 @@ import io.netty.util.ReferenceCountUtil;
  * @Created_date_time Jul 30, 2017 2:19:04 PM
  */
 public class ClientHandler  extends ChannelInboundHandlerAdapter {
-	
-	private final ByteBuf firstMessage;
-	
-	
-	
-	public ClientHandler() {
-		       	JSONObject json = new JSONObject();
-		       	json.put("name", "Monu.c");
-		       	json.put("place", "coimbatore");
-		       	json.put("email", "ecemonu@gmail.com");
-		       	firstMessage=	Unpooled.copiedBuffer(json.toString(), CharsetUtil.UTF_8);
-		       
+		
+			public ClientHandler() {
 		       }
-	
-	
-
-
 	
 		   @Override
 	       public void channelActive(ChannelHandlerContext ctx) {
-	           //ctx.writeAndFlush(firstMessage);
-	           ctx.writeAndFlush(new Person("xyz","cbe","xyz@gmail.com"));
-	           //ctx.writeAndFlush( Unpooled.copiedBuffer("Netty MAY rock!", CharsetUtil.UTF_8));
-	          
+	           ctx.writeAndFlush(new Person("xyz","cbe","xyz@gmail.com"));	          
 	       }
-	
 	    
 	        @Override
 	        public void channelRead(ChannelHandlerContext ctx, Object msg) {
