@@ -1,6 +1,7 @@
 package source;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -38,44 +39,19 @@ public class Server {
               ServerBootstrap b = new ServerBootstrap();
               b.group(bossGroup, workerGroup)
                .channel(NioServerSocketChannel.class)
-              // .option(ChannelOption.SO_BACKLOG, 100)
                .handler(new LoggingHandler(LogLevel.INFO))
                .childHandler(new HttpKafkaInitializer());
+             
               
-              
-              /*
-               .childOption(ChannelOption.SO_KEEPALIVE, true)*/
-        /*       .childHandler(new ChannelInitializer<SocketChannel>() {
-                   @Override
-                   public void initChannel(SocketChannel ch) throws Exception {
-                	   System.out.println("New client connected: " + ch.localAddress());
-                       ChannelPipeline p = ch.pipeline();
-                       
-                       
-                       if (sslCtx != null) {
-                           p.addLast(sslCtx.newHandler(ch.alloc()));// add with name
-                       p.addLast("idleStateHandler",new IdleStateHandler(0,0,5)); // add with name                          
-                       p.addLast(new JsonDecoder());
-                       p.addLast(new JsonEncoder());
-                       }
-                       //p.addLast(new LoggingHandler(LogLevel.INFO));
-                       p.addLast(new ServerHandler());
-                   }
-               });*/
-  
-              // Start the server.
-             // ChannelFuture f = b.bind(PORT).sync();
-              
-              
-      	      b.bind(PORT).sync();
+              ChannelFuture f=b.bind(PORT).sync();
               System.out.println("Server Started!");
               // Wait until the server socket is closed.
-              //f.channel().closeFuture().sync();
+              f.channel().closeFuture().sync();
           } 
           finally {
               // Shut down all event loops to terminate all threads.
-             /* bossGroup.shutdownGracefully();
-              workerGroup.shutdownGracefully();*/
+            bossGroup.shutdownGracefully();
+              workerGroup.shutdownGracefully();
           }
       }
 }

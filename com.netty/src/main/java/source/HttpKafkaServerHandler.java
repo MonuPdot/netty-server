@@ -55,16 +55,7 @@ public class HttpKafkaServerHandler extends ChannelInboundHandlerAdapter {
         kafkaProducer = new KafkaProducer<String, String>(props);
         kafkaProducer.send(new ProducerRecord<String, String>("PersonName",person.getName()));
 
-        
-	/*    if (msg instanceof HttpRequest) {
-            HttpRequest httpRequest = (HttpRequest) msg;
-
-            String uri = httpRequest.getUri();
-            
-        
-            FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK);
-            ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-        }*/
+   
 	}
 	   @Override
 	      public void channelReadComplete(ChannelHandlerContext ctx) {
