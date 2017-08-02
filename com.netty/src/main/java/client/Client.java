@@ -1,5 +1,8 @@
 package client;
 
+import Model.Person;
+import enc_decoder.JsonDecoder;
+import enc_decoder.JsonEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -42,29 +45,37 @@ public final class Client {
           
           try {
               Bootstrap b = new Bootstrap();
-              b.group(group)
-               .channel(NioSocketChannel.class)
-               .option(ChannelOption.TCP_NODELAY, true)
-               .handler(new ChannelInitializer<SocketChannel>() {
+              b.group(group);
+              
+              b.channel(NioSocketChannel.class);
+              
+              //b.option(ChannelOption.TCP_NODELAY, true);
+
+              b.handler(new ChannelInitializer<SocketChannel>() {
                    @Override
                    public void initChannel(SocketChannel ch) throws Exception {
                       ChannelPipeline p = ch.pipeline();
-                       if (sslCtx != null) {
-                           p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
-                       }
+            /*           if (sslCtx != null) {*/
+                         //  p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
+                           p.addLast(new JsonDecoder());
+                           p.addLast(new JsonEncoder());
+                     /*  } */            
+                     
                        //p.addLast(new LoggingHandler(LogLevel.INFO));
                        p.addLast(new ClientHandler());
                    }
                });
   
               // Start the client.
+
+              b.option(ChannelOption.SO_KEEPALIVE, true);
               ChannelFuture f = b.connect(HOST, PORT).sync();
   
               // Wait until the connection is closed.
-              f.channel().closeFuture().sync();
+             // f.channel().closeFuture().sync();
           } finally {
               // Shut down the event loop to terminate all threads.
-              group.shutdownGracefully();
+             // group.shutdownGracefully();
           }
       }
  }

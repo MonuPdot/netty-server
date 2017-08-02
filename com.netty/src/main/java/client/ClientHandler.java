@@ -1,5 +1,10 @@
 package client;
 
+import java.nio.ByteBuffer;
+
+import org.json.JSONObject;
+
+import Model.Person;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,16 +23,25 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
 	
 	private final ByteBuf firstMessage;
 	
+	
+	
 	public ClientHandler() {
-		          firstMessage = Unpooled.buffer(Client.SIZE);
-		           for (int i = 0; i < firstMessage.capacity(); i ++) {
-		               firstMessage.writeByte((byte) i);
-		           }
+		       	JSONObject json = new JSONObject();
+		       	json.put("name", "Monu.c");
+		       	json.put("place", "coimbatore");
+		       	json.put("email", "ecemonu@gmail.com");
+		       	firstMessage=	Unpooled.copiedBuffer(json.toString(), CharsetUtil.UTF_8);
+		       
 		       }
+	
+	
+
+
+	
 		   @Override
 	       public void channelActive(ChannelHandlerContext ctx) {
-			   
-	           ctx.writeAndFlush(firstMessage.retain());
+	           //ctx.writeAndFlush(firstMessage);
+	           ctx.writeAndFlush(new Person("xyz","cbe","xyz@gmail.com"));
 	           //ctx.writeAndFlush( Unpooled.copiedBuffer("Netty MAY rock!", CharsetUtil.UTF_8));
 	          
 	       }
