@@ -20,7 +20,6 @@ public class HttpKafkaInitializer extends ChannelInitializer<SocketChannel>{
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
      System.out.println("New client connected: " + ch.localAddress());
-          
     	ChannelPipeline p = ch.pipeline();
         p.addLast(new JsonDecoder());
         p.addLast(new JsonEncoder());
