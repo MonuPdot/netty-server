@@ -20,9 +20,7 @@ public class JsonEncoder extends MessageToByteEncoder<Person> {
 	protected void encode(ChannelHandlerContext ctx, Person msg, ByteBuf out) throws Exception {	
 	
 	    System.out.println("encoding: " +  msg.toByteArray(msg));
-	    System.out.println("encoding 1" + out.toString(CharsetUtil.UTF_8));
 		out.writeBytes(msg.toByteArray(msg));
-		System.out.println("encoding 2" + out.toString(CharsetUtil.UTF_8));
 	}
 
 }
